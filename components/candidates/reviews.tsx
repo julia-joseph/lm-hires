@@ -170,7 +170,7 @@ export default function Reviews({
             <button
               type="button"
               onClick={onCancel}
-              className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              className="px-4 py-2 text-gray-600 border bg-white border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
               Cancel
             </button>

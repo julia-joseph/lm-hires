@@ -23,7 +23,7 @@ export default function Candidates(props: {
   }
 
   return (
-    <div className="container mx-auto px-2 py-2">
+    <div className="container mx-auto px-2 py-2 ">
       <div className="flex justify-between items-center">
         <Heading title="Instructor Candidates" />
         {props.reviewMode ? (
@@ -43,7 +43,7 @@ export default function Candidates(props: {
         )}
       </div>
       <div
-        className="overflow-x-auto"
+        className="overflow-x-auto max-h-70 overflow-y-auto"
         style={{
           fontSize: "12px",
         }}
