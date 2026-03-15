@@ -66,3 +66,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+.cta-button {
+  padding: 0rem 2rem !important;
+  height: 2rem !important;
+}
+
+.body-bg {
+  background-color: rgb(229, 231, 235, 25%) !important;
+}
