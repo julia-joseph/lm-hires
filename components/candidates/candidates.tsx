@@ -8,7 +8,7 @@ export default function Candidates(props: {
   loading: boolean;
   error: string | null;
   reviews: import("@/lib/hires/reviews").Review[];
-  onSelectCandidate: (candidateId: number) => void;
+  onSelectCandidate: (candidate: Candidate) => void;
   reviewMode?: boolean;
   toggleReviewMode?: () => void;
 }) {
@@ -104,7 +104,7 @@ export default function Candidates(props: {
                 <tr key={candidate.id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border-b">
                     <button
-                      onClick={() => onSelectCandidate(candidate.id)}
+                      onClick={() => onSelectCandidate(candidate)}
                       className={
                         "px-3 py-1 rounded text-sm font-medium " +
                         (hasReview

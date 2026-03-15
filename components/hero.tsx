@@ -15,7 +15,7 @@ export function Hero() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
   const [reviewsError, setReviewsError] = useState<string | null>(null);
-  const [selectedCandidateId, setSelectedCandidateId] = useState<number | null>(
+  const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(
     null,
   );
 
@@ -59,7 +59,7 @@ export function Hero() {
 
   const toggleReviewMode = () => {
     setReviewMode(!reviewMode);
-    setSelectedCandidateId(null);
+    setSelectedCandidate(null);
   };
 
   return (
@@ -70,7 +70,7 @@ export function Hero() {
           loading={loading}
           error={error}
           reviews={reviews}
-          onSelectCandidate={(id) => setSelectedCandidateId(id)}
+          onSelectCandidate={(candidate) => setSelectedCandidate(candidate)}
           reviewMode={reviewMode}
           toggleReviewMode={toggleReviewMode}
         />
@@ -85,13 +85,13 @@ export function Hero() {
           toggleReviewMode={toggleReviewMode}
         />
       )}
-      {selectedCandidateId != null && !reviewMode && (
+      {selectedCandidate != null && !reviewMode && (
         <Reviews
-          candidateId={selectedCandidateId}
+          candidate={selectedCandidate}
           initialReview={reviews.find(
-            (review) => review.candidate_id === selectedCandidateId,
+            (review) => review.candidate_id === selectedCandidate.id,
           )}
-          onCancel={() => setSelectedCandidateId(null)}
+          onCancel={() => setSelectedCandidate(null)}
           onSubmit={async (reviewData) => {
             // Optional: post review back to API and refresh reviews
             try {
@@ -104,13 +104,13 @@ export function Hero() {
 
               const saved = await response.json();
               setReviews((prev) => [
-                ...prev.filter((r) => r.candidate_id !== selectedCandidateId),
+                ...prev.filter((r) => r.candidate_id !== selectedCandidate.id),
                 ...saved,
               ]);
-              setSelectedCandidateId(null);
+              setSelectedCandidate(null);
             } catch (err) {
               console.error(err);
-              setSelectedCandidateId(null);
+              setSelectedCandidate(null);
             }
           }}
         />

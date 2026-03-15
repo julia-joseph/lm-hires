@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { Review } from "@/lib/hires/reviews";
 import { createClient } from "@/lib/supabase/client";
 import { Heading } from "../heading";
+import { Candidate } from "@/lib/hires/candidate";
 
 interface ReviewFormProps {
-  candidateId: number;
+  candidate: Candidate;
   initialReview?: Review | null;
   onSubmit?: (
     review: Omit<Review, "review_id" | "created_at" | "updated_at">,
@@ -15,7 +16,7 @@ interface ReviewFormProps {
 }
 
 export default function Reviews({
-  candidateId,
+  candidate,
   initialReview,
   onSubmit,
   onCancel,
@@ -23,7 +24,7 @@ export default function Reviews({
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    candidate_id: candidateId,
+    candidate_id: candidate.id,
     behavioural_score: "",
     teaching_score: "",
     speaking_score: "",
@@ -34,7 +35,7 @@ export default function Reviews({
   useEffect(() => {
     if (!initialReview) {
       setFormData({
-        candidate_id: candidateId,
+        candidate_id: candidate.id,
         behavioural_score: "",
         teaching_score: "",
         speaking_score: "",
@@ -45,14 +46,14 @@ export default function Reviews({
     }
 
     setFormData({
-      candidate_id: candidateId,
+      candidate_id: candidate.id,
       behavioural_score: initialReview.behavioural_score?.toString() ?? "",
       teaching_score: initialReview.teaching_score?.toString() ?? "",
       speaking_score: initialReview.speaking_score?.toString() ?? "",
       overall_score: initialReview.overall_score?.toString() ?? "",
       comments: initialReview.comments ?? "",
     });
-  }, [candidateId, initialReview]);
+  }, [candidate.id, initialReview]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -82,7 +83,7 @@ export default function Reviews({
 
     try {
       const reviewData = {
-        candidate_id: candidateId,
+        candidate_id: candidate.id,
         behavioural_score: formData.behavioural_score
           ? parseFloat(formData.behavioural_score)
           : null,
@@ -109,7 +110,7 @@ export default function Reviews({
 
       // Reset form
       setFormData({
-        candidate_id: candidateId,
+        candidate_id: candidate.id,
         behavioural_score: "",
         teaching_score: "",
         speaking_score: "",
@@ -156,10 +157,14 @@ export default function Reviews({
     </div>
   );
 
+  const candidateIdMod = `GM${new Date(candidate.created_at).getFullYear()}${String(new Date(candidate.created_at).getMonth() + 1).padStart(2, "0")}${String(
+    new Date(candidate.created_at).getDate(),
+  ).padStart(2, "0")}${candidate.id}`;
+
   return (
     <div className="body-bg p-6 rounded-lg w-full max-w-7xl border">
       <div className="flex justify-between items-center">
-        <Heading title={`Review Candidate #${candidateId}`} />
+        <Heading title={`Review Candidate #${candidateIdMod}`} />
         <div className="flex justify-end space-x-3">
           {onCancel && (
             <button
