@@ -138,7 +138,7 @@ export default function Reviews({
     <div className="mb-4">
       <label
         htmlFor={name}
-        className="block text-sm font-bold text-gray-700 mb-1"
+        className="block text-[14px] font-bold text-gray-700 mb-1"
       >
         {label}
       </label>
@@ -189,7 +189,7 @@ export default function Reviews({
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4  text-[12px]">
         <div className="flex gap-4">
           <div className="">
             <ScoreInput

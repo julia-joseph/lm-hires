@@ -67,9 +67,9 @@
   }
 }
 
-.cta-button {
-  padding: 0rem 2rem !important;
-  height: 2rem !important;
+body {
+  font-family: "Google Sans", sans-serif;
+  box-sizing: border-box;
 }
 
 .body-bg {

@@ -46,14 +46,14 @@ export default function ReviewMode(props: {
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             onClick={props.toggleReviewMode}
           >
-            Candidate View
+            Candidate Mode
           </button>
         ) : (
           <button
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             onClick={props.toggleReviewMode}
           >
-            Review View
+            Review Mode
           </button>
         )}
       </div>
@@ -108,6 +108,9 @@ export default function ReviewMode(props: {
               <th className="px-4 py-2 border-b text-left">Reviewed By</th>
               <th className="px-4 py-2 border-b text-left">Comments</th>
               <th className="px-4 py-2 border-b text-left">Submitted On</th>
+              <th className="px-4 py-2 border-b text-left">
+                Days Since Submission
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -118,6 +121,27 @@ export default function ReviewMode(props: {
               ).padStart(2, "0")}${candidate.id}`;
 
               const review = reviewsByCandidate.get(candidate.id);
+
+              function dateDiffInDays(a: Date, b: Date) {
+                const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+                // Discard the time and time-zone information.
+                const utc1 = Date.UTC(
+                  a.getFullYear(),
+                  a.getMonth(),
+                  a.getDate(),
+                );
+                const utc2 = Date.UTC(
+                  b.getFullYear(),
+                  b.getMonth(),
+                  b.getDate(),
+                );
+
+                return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+              }
+
+              const date1 = createDate;
+              const date2 = new Date();
+              const diffDays = dateDiffInDays(date1, date2);
 
               return (
                 <tr key={candidate.id} className="hover:bg-gray-50">
@@ -260,6 +284,9 @@ export default function ReviewMode(props: {
                     {review?.created_at
                       ? new Date(review.created_at).toLocaleDateString()
                       : "-"}
+                  </td>
+                  <td className="px-4 py-2 border-b">
+                    {review ? "-" : diffDays}
                   </td>
                 </tr>
               );
